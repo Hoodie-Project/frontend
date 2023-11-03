@@ -4,7 +4,10 @@ const { i18n } = require('./next-i18next.config');
 const nextConfig = {
   reactStrictMode: true,
   i18n,
-  webpack: (config) => {
+  compiler: {
+    styledComponents: true,
+  },
+  webpack: config => {
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { MyPersist } from 'myPersist';
+import { TMyPersist } from 'myPersist';
 
 interface IScrappedState {
   scrappedIds: string[];
@@ -9,7 +9,7 @@ interface IScrappedState {
 }
 
 export const useScrappedStore = create<IScrappedState>(
-  (persist as MyPersist<IScrappedState>)(
+  (persist as TMyPersist<IScrappedState>)(
     (set) => ({
       scrappedIds: [],
       addScrap: (id: string) =>
