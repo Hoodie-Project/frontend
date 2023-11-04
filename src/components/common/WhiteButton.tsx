@@ -5,11 +5,12 @@ import { TSvgComponent } from 'svgComponent';
 interface WhiteButtonProps {
   Icon?: TSvgComponent;
   children: React.ReactNode;
+  handleClick?: () => void;
 }
 
-function WhiteButton({ Icon, children }: WhiteButtonProps) {
+function WhiteButton({ Icon, children, handleClick }: WhiteButtonProps) {
   return (
-    <Layout>
+    <Layout onClick={handleClick}>
       {Icon && <Icon />}
       <BtnName>{children}</BtnName>
     </Layout>
