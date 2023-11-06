@@ -5,7 +5,21 @@ import { getIcons } from '@/src/assets/icons/getIcons';
 function GoogleAuthButton() {
   const GoogleIcon = getIcons('GoogleLogo');
 
-  return <WhiteButton Icon={GoogleIcon}>Sign in using Google</WhiteButton>;
+  const handleGoogleLogin = () => {
+    const googleAuthUrl =
+      'https://accounts.google.com/o/oauth2/auth?' +
+      `client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&` +
+      `redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&` +
+      `response_type=code&` +
+      `scope=email profile`;
+    window.location.href = googleAuthUrl;
+  };
+
+  return (
+    <WhiteButton Icon={GoogleIcon} handleClick={handleGoogleLogin}>
+      Sign in using Google
+    </WhiteButton>
+  );
 }
 
 export default GoogleAuthButton;
