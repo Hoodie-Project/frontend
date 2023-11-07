@@ -2,9 +2,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 const Layout = dynamic(() => import('@/src/components/common/Layout'), { ssr: false });
-const HomeLayout = dynamic(() => import('@/src/components/home/HomeLayout'), { ssr: false });
+const HomeLayout = dynamic(() => import('@/src/components/layout/HomeLayout'), { ssr: false });
 
-function HomeContainer() {
+function HomeLayoutContainer() {
   return (
     <Layout>
       <HomeLayout />
@@ -12,4 +12,4 @@ function HomeContainer() {
   );
 }
 
-export default HomeContainer;
+export default HomeLayoutContainer;
