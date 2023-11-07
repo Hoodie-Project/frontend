@@ -1,13 +1,19 @@
 import React from 'react';
 import { useSidebarLocationStore } from '@/src/zustand/layout';
 import { styled } from 'styled-components';
+import Calendar from '@/src/components/calendar/Calendar';
+import Sidebar from '@/src/components/sidebar/Sidebar';
 
 function HomeLayout() {
   const { sidebarLocation } = useSidebarLocationStore.getState();
   return (
     <Layout $sidebarLocation={sidebarLocation}>
-      <CalendarWrapper>Calendar</CalendarWrapper>
-      <SidebarWrapper>Sidebar</SidebarWrapper>
+      <CalendarWrapper>
+        <Calendar />
+      </CalendarWrapper>
+      <SidebarWrapper>
+        <Sidebar />
+      </SidebarWrapper>
     </Layout>
   );
 }
@@ -20,19 +26,17 @@ const Layout = styled.div<{ $sidebarLocation: boolean }>`
   display: flex;
   flex-direction: row;
   flex-direction: ${props => (props.$sidebarLocation ? 'row-reverse' : 'row')};
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 `;
 
 const CalendarWrapper = styled.div`
   display: flex;
+  flex-basis: 0;
   flex-grow: 4.5;
-  // layout 확인 용도
-  border: solid 1px red;
 `;
 
 const SidebarWrapper = styled.div`
   display: flex;
+  flex-basis: 0;
   flex-grow: 1;
-  // layout 확인 용도
-  border: solid 1px blue;
 `;
