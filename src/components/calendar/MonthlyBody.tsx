@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import MonthlyDates from './MonthlyDates';
 
-// Body 컴포넌트에 전달되는 props의 타입을 정의합니다.
 interface MonthlyBodyProp {
   totalDate: number[];
   today: number;

@@ -49,5 +49,6 @@ const MenuTitle = styled.div`
   cursor: pointer;
   &:hover {
     background: #e4ccff;
+    transition: background-color 0.3s;
   }
 `;

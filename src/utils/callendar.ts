@@ -4,7 +4,7 @@
  * @param year number 현재 년도
  * @returns targetMonth에 대한 달력 데이터를 배열형태로 리턴
  */
-export const changeDate = (targetMonth: number, year: number): number[] => {
+export function changeDate(targetMonth: number, year: number): number[] {
   // 이전 달의 마지막 날짜와 요일
   const prevLastDate = new Date(year, targetMonth - 1, 0).getDate();
   const prevLastDay = new Date(year, targetMonth - 1, 0).getDay();
@@ -20,4 +20,29 @@ export const changeDate = (targetMonth: number, year: number): number[] => {
   const nextDates = Array.from({ length: 6 - thisLastDay }, (_, i) => i + 1);
 
   return [...prevDates, ...thisDates, ...nextDates];
-};
+}
+
+/**
+ *
+ * @param monthNumber number
+ * @returns January, February, March, April, May, June, July, August, September, October, November, December
+ */
+export function getMonthName(monthNumber: number) {
+  const monthNames = [
+    '',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  return monthNames[monthNumber];
+}

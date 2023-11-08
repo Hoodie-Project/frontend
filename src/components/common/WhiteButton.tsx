@@ -35,10 +35,9 @@ const Layout = styled.button.attrs({ type: 'button' })`
   transition: all 0.1s ease-out;
 
   &:hover {
-    border-radius: 50px;
-    border: 1px solid #6f40ff;
-    background: #fff;
     box-shadow: 0px 0px 3px 1px #6f40ff;
+    transition: all 0.3s;
+
     span {
       color: #6f40ff;
     }

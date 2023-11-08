@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from './Head';
 import MonthlyBody from './MonthlyBody';
-import { changeDate } from '@/src/utils/changeDate';
+import { changeDate } from '@/src/utils/callendar';
 
 function MonthlyCalendar() {
   const currentDate = new Date();
