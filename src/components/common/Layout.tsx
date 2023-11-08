@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import Header from './Header';
-import Copyright from './Copyright';
 import { styled } from 'styled-components';
 
 interface LayoutProps {
@@ -12,7 +11,6 @@ function Layout({ children }: LayoutProps) {
     <LayoutWrapper>
       <Header />
       <Main>{children}</Main>
-      <Copyright />
     </LayoutWrapper>
   );
 }

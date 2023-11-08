@@ -9,45 +9,59 @@ interface DatesProps {
   month: number;
   year: number;
   idx: number;
+  type?: string;
+  totalDateLength: number;
 }
 
-function MonthlyDates({ lastDate, firstDate, date, findToday, month, year, idx }: DatesProps) {
+function MonthlyDates({ lastDate, firstDate, date, findToday, month, year, idx, type, totalDateLength }: DatesProps) {
   return (
-    <>
-      <Layout
-        onDoubleClick={() => {
-          alert('더블 클릭시 이벤트 생성');
-        }}
-      >
-        <DateNum $idx={idx} $lastDate={lastDate} $firstDate={firstDate}>
-          <TodayCSS $findToday={findToday}>{date}</TodayCSS>
-        </DateNum>
-      </Layout>
-    </>
+    <Layout
+      $type={type}
+      $totalDateLength={totalDateLength}
+      onDoubleClick={() => {
+        alert('더블 클릭시 이벤트 생성');
+      }}
+    >
+      <DateNum $type={type} $idx={idx} $lastDate={lastDate} $firstDate={firstDate}>
+        <TodayCSS $findToday={findToday} $type={type}>
+          {date}
+        </TodayCSS>
+      </DateNum>
+    </Layout>
   );
 }
 
-const Layout = styled.li`
+const Layout = styled.li<{ $type?: string; $totalDateLength: number }>`
   position: relative;
   width: calc(100% / 7);
-  height: 7.69vw;
-  border-bottom: 1px solid #e5e0ed;
-  border-left: 1px solid #e5e0ed;
-  background-color: white;
-  &:nth-child(7n) {
-    border-right: 1px solid #e5e0ed;
-  }
+  height: calc(100% / ${props => Math.ceil(props.$totalDateLength / 7)});
 
-  &:nth-child(7n + 1),
-  &:nth-child(7n) {
-    color: #7a7a7a;
-    background-color: #f8f6fb;
-  }
+  ${props =>
+    props.$type !== 'mini'
+      ? css`
+          border-bottom: 1px solid #e5e0ed;
+          border-left: 1px solid #e5e0ed;
+          background-color: white;
+          &:nth-child(7n) {
+            border-right: 1px solid #e5e0ed;
+          }
+
+          &:nth-child(7n + 1),
+          &:nth-child(7n) {
+            color: #7a7a7a;
+            background-color: #f8f6fb;
+          }
+        `
+      : css`
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        `}
 `;
 
-const DateNum = styled.div<{ $idx: number; $lastDate: number; $firstDate: number }>`
-  padding: 0.5rem 0 0 0.5rem;
-  font-size: 15px;
+const DateNum = styled.div<{ $idx: number; $lastDate: number; $firstDate: number; $type?: string }>`
+  padding: ${props => (props.$type === 'mini' ? '0rem' : '0.5rem 0 0 0.5rem')};
+  font-size: ${props => (props.$type === 'mini' ? '11px' : '15px')};
   ${props =>
     props.$idx < props.$lastDate &&
     css`
@@ -62,7 +76,7 @@ const DateNum = styled.div<{ $idx: number; $lastDate: number; $firstDate: number
     `};
 `;
 
-const TodayCSS = styled.span<{ $findToday: boolean }>`
+const TodayCSS = styled.span<{ $findToday: boolean; $type?: string }>`
   ${props =>
     props.$findToday &&
     css`

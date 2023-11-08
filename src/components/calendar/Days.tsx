@@ -1,13 +1,22 @@
 import React from 'react';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-function Days() {
+interface DaysProps {
+  type?: string;
+}
+
+function Days({ type }: DaysProps) {
   const DAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const DAYMINI = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Sat'];
+
+  const daysToDisplay = type === 'mini' ? DAYMINI : DAY;
 
   return (
     <Layout>
-      {DAY.map((day, idx) => (
-        <Day key={idx}>{day}</Day>
+      {daysToDisplay.map((day, idx) => (
+        <Day key={idx} $type={type}>
+          {day}
+        </Day>
       ))}
     </Layout>
   );
@@ -19,13 +28,19 @@ const Layout = styled.div`
   display: flex;
 `;
 
-const Day = styled.li`
+const Day = styled.li<{ $type?: string }>`
   width: calc(100% / 7);
   text-align: center;
-  background-color: #e5e0ed;
+  background-color: ${props => (props.$type !== 'mini' ? '#e5e0ed' : '')};
   padding: 0.2vw;
   :nth-child(7n + 1),
   :nth-child(7n) {
     color: #969696;
   }
+  ${props =>
+    props.$type === 'mini' &&
+    css`
+      font-size: 11px;
+      font-weight: bolder;
+    `}
 `;
