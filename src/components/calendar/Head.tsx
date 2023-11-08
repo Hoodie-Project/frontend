@@ -62,7 +62,7 @@ const HeadSection = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0.7vw;
+  margin: 0.7vw 0;
 `;
 
 const LeftSide = styled.div`

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Head from 'next/head';
 import '@/src/styles/globals.css';
 import type { AppProps } from 'next/app';
 
@@ -23,8 +24,14 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Head>
+        <title>Hoodie Plan</title>
+        <meta name='description' content='Copyright © 2023 Team Hoodie All rights reserved' />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        {/* <link rel='icon' href='/favicon.ico' /> */}
+      </Head>
       <Component {...pageProps} />
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }
