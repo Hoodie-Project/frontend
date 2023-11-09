@@ -40,7 +40,7 @@ function MonthlyBody({ totalDate, today, month, year, type }: MonthlyBodyProp) {
 
 const Layout = styled.div<{ $type?: string }>`
   width: 100%;
-  height: ${props => (props.$type !== 'mini' ? 'calc(100% - 5.85rem)' : '17%')};
+  height: ${props => (props.$type !== 'mini' ? 'calc(100% - 5.85rem)' : '70%')};
   display: flex;
   flex-flow: row wrap;
 `;

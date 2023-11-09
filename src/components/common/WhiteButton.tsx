@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { styled } from 'styled-components';
 import { TSvgComponent } from 'svgComponent';
 
 interface WhiteButtonProps {
   Icon?: TSvgComponent;
-  children: React.ReactNode;
+  children: ReactNode;
   handleClick?: () => void;
 }
 

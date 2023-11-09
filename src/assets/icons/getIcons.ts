@@ -7,6 +7,7 @@ import EmptyProfile from './empty_profile.svg';
 import Setting from './setting.svg';
 import ArrowLeft from './arrow-left.svg';
 import ArrowRight from './arrow-right.svg';
+import Hamburger from './hamburger.svg';
 
 const iconMap: { [key: string]: TSvgComponent } = {
   CalendarToday,
@@ -17,6 +18,7 @@ const iconMap: { [key: string]: TSvgComponent } = {
   Setting,
   ArrowLeft,
   ArrowRight,
+  Hamburger,
 };
 
 export function getIcons(name: string): TSvgComponent {
