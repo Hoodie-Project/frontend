@@ -8,6 +8,13 @@ import nextI18NextConfig from '@/next-i18next.config';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'YeongdeokSea',
+  },
+});
 
 function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
@@ -30,7 +37,9 @@ function App({ Component, pageProps }: AppProps) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         {/* <link rel='icon' href='/favicon.ico' /> */}
       </Head>
-      <Component {...pageProps} />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
       {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );

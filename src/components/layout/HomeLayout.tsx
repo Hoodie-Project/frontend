@@ -5,7 +5,7 @@ import Calendar from '@/src/components/calendar/Calendar';
 import Sidebar from '@/src/components/sidebar/Sidebar';
 
 function HomeLayout() {
-  const { sidebarLocation } = useSidebarLocationStore.getState();
+  const { sidebarLocation } = useSidebarLocationStore();
   return (
     <Layout $sidebarLocation={sidebarLocation}>
       <CalendarWrapper>
