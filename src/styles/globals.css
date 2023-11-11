@@ -1,8 +1,4 @@
-@font-face {
-  font-family: 'YeongdeokSea';
-  src: url('/fonts/Yeongdeok-Sea.ttf') format('truetype');
-  font-weight: normal;
-}
+@import './fonts.css';
 
 * {
   box-sizing: border-box;

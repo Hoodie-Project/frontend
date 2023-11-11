@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-function Menu() {
-  const menus = [
+function Nav() {
+  const navs = [
     { name: 'Calendars', href: '/calendars' },
     { name: 'Goals', href: '/goals' },
     { name: 'Diary', href: '/diary' },
@@ -12,10 +12,10 @@ function Menu() {
 
   return (
     <Layout>
-      {menus.map(menu => {
+      {navs.map(nav => {
         return (
-          <Link key={menu.name} href={menu.href}>
-            <MenuTitle>{menu.name}</MenuTitle>
+          <Link key={nav.name} href={nav.href}>
+            <NavTitle>{nav.name}</NavTitle>
           </Link>
         );
       })}
@@ -23,7 +23,7 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default Nav;
 
 const Layout = styled.div`
   width: auto;
@@ -36,7 +36,7 @@ const Layout = styled.div`
   }
 `;
 
-const MenuTitle = styled.div`
+const NavTitle = styled.div`
   width: auto;
   height: 2rem;
   padding: 0 0.6rem 0 0.6rem;

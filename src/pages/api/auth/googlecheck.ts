@@ -32,6 +32,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const tokenResponse = await exchangeCodeForToken(code);
       console.log(tokenResponse);
+
+      // 서버에 토큰 잘 보내지는지 확인
+      // const serverRes = postTokenToServer(tokenResponse, '/api/user/signin/google');
+
       res.redirect(302, 'http://localhost:3000');
     } catch (error) {
       console.error(error);

@@ -1,39 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Head from './Head';
 import MonthlyBody from './MonthlyBody';
-import { changeDate } from '@/src/utils/callendar';
+import { useMonthlyCalendarStore } from '@/src/zustand/calendar';
+import styled from 'styled-components';
 
-function MonthlyCalendar() {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1;
+interface MonthlyCalendarProps {
+  type?: string;
+}
 
-  const [month, setMonth] = useState(currentMonth);
-  const [year, setYear] = useState(currentYear);
-  const [totalDate, setTotalDate] = useState<number[]>([]);
-  const [today, setToday] = useState<number>(currentDate.getDate());
-
-  useEffect(() => {
-    setTotalDate(changeDate(currentMonth, year));
-  }, []);
-
-  useEffect(() => {
-    setTotalDate(changeDate(month, year));
-  }, [month]);
-
-  const goToday = () => {
-    const today = new Date().getDate();
-    const thisMonth = new Date().getMonth() + 1;
-    setMonth(thisMonth);
-    setToday(today);
-  };
+function MonthlyCalendar({ type }: MonthlyCalendarProps) {
+  const { month, setMonth, year, totalDate, today, goToday } = useMonthlyCalendarStore();
 
   return (
-    <>
-      <Head year={year} month={month} setMonth={setMonth} goToday={goToday} />
-      <MonthlyBody totalDate={totalDate} today={today} month={month} year={year} />
-    </>
+    <Layout $type={type}>
+      <Head year={year} month={month} setMonth={setMonth} goToday={goToday} type={type} />
+      <MonthlyBody totalDate={totalDate} today={today} month={month} year={year} type={type} />
+    </Layout>
   );
 }
 
 export default MonthlyCalendar;
+
+const Layout = styled.section<{ $type?: string }>`
+  width: 100%;
+  height: ${props => (props.$type === 'mini' ? '10.625rem' : '100%')};
+`;
