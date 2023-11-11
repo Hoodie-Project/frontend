@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Nav from './Nav';
 import { Menu, MenuItem } from '@mui/material';
-
 import { getIcons } from '@/src/assets/icons/getIcons';
 import { useSidebarLocationStore } from '@/src/zustand/layout';
+import { useModalStore } from '@/src/zustand/modal';
 import styled from 'styled-components';
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const open = Boolean(anchorEl);
   const { toggleSidebarLocation } = useSidebarLocationStore();
+  const { openModal } = useModalStore();
+
   const ProfileIcon = getIcons('EmptyProfile');
   const SettingIcon = getIcons('Setting');
 
@@ -27,6 +29,7 @@ function Header() {
       id: 'add-delete-widget',
       name: '사이드바 위젯 추가/삭제',
       handleClick: () => {
+        openModal();
         handleClose();
       },
     },

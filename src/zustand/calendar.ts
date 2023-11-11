@@ -1,15 +1,6 @@
 import { create } from 'zustand';
 import { changeDate } from '@/src/utils/calendar';
-
-interface CalendarState {
-  month: number;
-  year: number;
-  totalDate: number[];
-  today: number;
-  setMonth: (month: number) => void;
-  setYear: (year: number) => void;
-  goToday: () => void;
-}
+import { CalendarState } from '@/src/models/calendar';
 
 export const useMonthlyCalendarStore = create<CalendarState>(set => ({
   month: new Date().getMonth() + 1,

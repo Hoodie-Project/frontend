@@ -1,69 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
 import MonthlyCalendar from '@/src/components/calendar/MonthlyCalendar';
 import Copyright from '@/src/components/common/Copyright';
 import SidebarWidget from './SidebarWidget';
+import useDragDrop from '@/src/hooks/useDragDrop';
 import EventWidget from './EventWidget';
 import PlanWidget from './PlanWidget';
 import AffirmWidget from './AffirmWidget';
 
-interface WidgetItem {
-  id: string;
-  content: React.ReactNode;
-  size: string;
-}
-
-const widgetList = [
-  { id: 'event', content: <EventWidget />, size: 'l' },
-  { id: 'plan', content: <PlanWidget />, size: 'm' },
-  { id: 'affirmation', content: <AffirmWidget />, size: 's' },
-];
-
 function Sidebar() {
-  const [widgets, setWidgets] = useState<WidgetItem[]>(widgetList);
-  const [draggedItemId, setDraggedItemId] = useState<string | null>(null);
-  const [draggedOverContainerId, setDraggedOverContainerId] = useState<string | null>(null);
-
-  const handleDragStart = (id: string | null) => setDraggedItemId(id);
-  const handleDragEntered = (id: string | null) => setDraggedOverContainerId(id);
-  const handleDragLeave = () => setDraggedOverContainerId(null);
-
-  const handleDrop = () => {
-    if (!draggedOverContainerId) {
-      clearState();
-      return;
-    }
-
-    const fromIndex = widgets.findIndex(w => w.id === draggedItemId);
-    const toIndex = widgets.findIndex(w => w.id === draggedOverContainerId);
-    setWidgets(w => moveItem(w, fromIndex, toIndex));
-
-    clearState();
-  };
-
-  const clearState = () => {
-    setDraggedItemId(null);
-    setDraggedOverContainerId(null);
-  };
+  const { widgets, draggedOverContainerId, handleDragStart, handleDragEntered, handleDragLeave, handleDrop } =
+    useDragDrop();
 
   return (
     <Layout>
       <MonthlyCalendar type='mini' />
       <SidebarContentContainer>
-        {widgets.map(w => (
-          <SidebarWidget
-            key={w.id}
-            size={w.size}
-            onDrop={handleDrop}
-            onDragEnter={() => handleDragEntered(w.id)}
-            onDragLeave={handleDragLeave}
-            isDraggedOver={w.id === draggedOverContainerId}
-            onDragStart={() => handleDragStart(w.id)}
-            id={w.id}
-          >
-            {w.content}
-          </SidebarWidget>
-        ))}
+        {widgets.map(w => {
+          if (w.isVisible) {
+            let WidgetComponent;
+            switch (w.type) {
+              case 'EventWidget':
+                WidgetComponent = EventWidget;
+                break;
+              case 'PlanWidget':
+                WidgetComponent = PlanWidget;
+                break;
+              case 'AffirmWidget':
+                WidgetComponent = AffirmWidget;
+                break;
+              default:
+                return null;
+            }
+            return (
+              <SidebarWidget
+                key={w.id}
+                size={w.size}
+                onDrop={handleDrop}
+                onDragEnter={() => handleDragEntered(w.id)}
+                onDragLeave={handleDragLeave}
+                isDraggedOver={w.id === draggedOverContainerId}
+                onDragStart={() => handleDragStart(w.id)}
+                id={w.id}
+              >
+                <WidgetComponent />
+              </SidebarWidget>
+            );
+          }
+        })}
       </SidebarContentContainer>
       <Copyright />
     </Layout>
@@ -71,18 +55,6 @@ function Sidebar() {
 }
 
 export default Sidebar;
-
-export function moveItem(list: WidgetItem[], from: number, to: number) {
-  const listClone = [...list];
-  if (from < to) {
-    listClone.splice(to + 1, 0, listClone[from]);
-    listClone.splice(from, 1);
-  } else if (to < from) {
-    listClone.splice(to, 0, listClone[from]);
-    listClone.splice(from + 1, 1);
-  }
-  return listClone;
-}
 
 const Layout = styled.div`
   position: relative;
