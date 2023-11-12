@@ -1,9 +1,9 @@
-import leftTopFillCircle from './Ellipse1.svg';
-import rightBottomFillCircle from './Ellipse2.svg';
-import leftMiddleFillCircle from './Ellipse3.svg';
-import rightMiddleFillCircle from './Ellipse4.svg';
-import leftTopStrockCircle from './Ellipse5.svg';
-import rightBottomStrockCircle from './Ellipse6.svg';
+import leftTopFillCircle from './ellipse1.svg';
+import rightBottomFillCircle from './ellipse2.svg';
+import leftMiddleFillCircle from './ellipse3.svg';
+import rightMiddleFillCircle from './ellipse4.svg';
+import leftTopStrockCircle from './ellipse5.svg';
+import rightBottomStrockCircle from './ellipse6.svg';
 import { TSvgComponent } from 'svgComponent';
 
 type SvgMapType = {
