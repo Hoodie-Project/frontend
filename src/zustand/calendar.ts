@@ -8,10 +8,21 @@ export const useMonthlyCalendarStore = create<CalendarState>(set => ({
   totalDate: changeDate(new Date().getMonth() + 1, new Date().getFullYear()),
   today: new Date().getDate(),
   setMonth: (month: number) =>
-    set(state => ({
-      month,
-      totalDate: changeDate(month, state.year),
-    })),
+    set(state => {
+      if (month > 12) {
+        month = 1;
+        state.year += 1;
+      }
+      if (month < 1) {
+        month = 12;
+        state.year -= 1;
+      }
+      return {
+        ...state,
+        month,
+        totalDate: changeDate(month, state.year),
+      };
+    }),
   setYear: (year: number) =>
     set(state => ({
       year,
