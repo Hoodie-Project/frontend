@@ -21,17 +21,6 @@ export function changeDate(targetMonth: number, year: number): number[] {
   // 다음 달의 날짜들을 계산
   const nextDates = Array.from({ length: 6 - thisLastDay }, (_, i) => i + 1);
 
-  // 12월 이후 월은 1월로 처리
-  if (targetMonth > 12) {
-    targetMonth = 1;
-    year += 1;
-  }
-  // 1월 이전 월은 12월로 처리
-  if (targetMonth < 1) {
-    targetMonth = 12;
-    year -= 1;
-  }
-
   return [...prevDates, ...thisDates, ...nextDates];
 }
 

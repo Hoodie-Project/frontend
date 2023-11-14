@@ -23,7 +23,7 @@ function Head({ year, month, goToday, setMonth, type }: HeadProps) {
       {type === 'mini' && (
         <Layout>
           <MiniHeadSecion>
-            <MiniSvgContainer onClick={() => setMonth(month - 1)}>
+            <MiniSvgContainer>
               <ArrowLeft onClick={() => setMonth(month - 1)} />
             </MiniSvgContainer>
             <MiniSpan>
@@ -45,7 +45,7 @@ function Head({ year, month, goToday, setMonth, type }: HeadProps) {
                 <Span>Today</Span>
               </TodayDiv>
               <BtnBox>
-                <SvgContainer onClick={() => setMonth(month - 1)}>
+                <SvgContainer>
                   <ArrowLeft onClick={() => setMonth(month - 1)} />
                 </SvgContainer>
                 <SvgContainer>
