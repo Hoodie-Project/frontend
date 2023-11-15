@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthContainer from '@/src/containers/auth/AuthContainer';
 
-function auth() {
+function Auth() {
   return (
     <>
       <AuthContainer />
@@ -9,4 +9,4 @@ function auth() {
   );
 }
 
-export default auth;
+export default Auth;
