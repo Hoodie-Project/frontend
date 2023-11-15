@@ -3,7 +3,7 @@ import { IKakaoToken } from '@/src/models/auth';
 import { postTokenToServer } from '@/src/pages/api/fetch/auth';
 
 async function getTokenFromKakao(authCode: string) {
-  const tokenUrl = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.NEXT_PUBLIC_KAKAO_AUTH_KEY}&client_secret=${process.env.KAKAO_AUTH_SECRET_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&code=${authCode}`;
+  const tokenUrl = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.NEXT_PUBLIC_KAKAO_AUTH_KEY}&client_secret=${process.env.KAKAO_AUTH_SECRET_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&code=${authCode}&nonce=${process.env.NEXT_PUBLIC_KAKAO_NONCE}`;
   const response: IKakaoToken = await fetch(tokenUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -20,10 +20,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log(tokenResponse);
 
       // 서버 연결 시 서버 응답 확인 후 redirect해주는 코드
-      // const serverRes = postTokenToServer(tokenResponse, '/api/user/signin/kakao');
-      // if (serverRes === 'ok'){
-      //   res.redirect(302, 'http://localhost:3000');
-      // }
+      const serverRes = await postTokenToServer(tokenResponse, '/kakao/signin');
+      console.log('서버 응답 : ', serverRes);
 
       res.redirect(302, 'http://localhost:3000');
     } catch (error) {

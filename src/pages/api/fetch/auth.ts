@@ -1,17 +1,15 @@
 import { IKakaoToken, IGoogleToken } from '@/src/models/auth';
 
+const BASE_URL = 'https://server.hoodiev.com/api';
+
 export async function postTokenToServer(res: IKakaoToken | IGoogleToken, url: string) {
-  const response = await fetch(url, {
+  const response = await fetch(`${BASE_URL}` + `${url}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(res),
   });
-
-  if (!response.ok) {
-    throw new Error('서버로부터 응답을 받지 못했습니다.');
-  }
 
   const data = await response.json();
   return data;

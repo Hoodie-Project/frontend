@@ -11,8 +11,9 @@ function GoogleAuthButton() {
       `client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&` +
       `redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&` +
       `response_type=code&` +
-      `scope=email profile&` +
-      `access_type=offline`;
+      `scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&` +
+      `access_type=offline&` +
+      `nonce=${process.env.NEXT_PUBLIC_GOOGLE_NONCE}`;
     window.location.href = googleAuthUrl;
   };
 

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { IGoogleToken } from '@/src/models/auth';
+import { postTokenToServer } from '@/src/pages/api/fetch/auth';
 
 // URLSearchParams type error를 위해 무조건적인 값임을 나타내기 위해 선언
 const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!;
@@ -7,7 +8,7 @@ const clientSecret = process.env.GOOGLE_AUTH_CLIENT_SECRET!;
 const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI!;
 
 async function exchangeCodeForToken(code: string) {
-  const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+  const response: IGoogleToken = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -19,10 +20,9 @@ async function exchangeCodeForToken(code: string) {
       redirect_uri: redirectUri,
       grant_type: 'authorization_code',
     }),
-  });
+  }).then(res => res.json());
 
-  const tokenData: IGoogleToken = await tokenResponse.json();
-  return tokenData;
+  return response;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -34,7 +34,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log(tokenResponse);
 
       // 서버에 토큰 잘 보내지는지 확인
-      // const serverRes = postTokenToServer(tokenResponse, '/api/user/signin/google');
+      const serverRes = await postTokenToServer(tokenResponse, '/google/signin');
+      console.log('서버 응답 : ', serverRes);
 
       res.redirect(302, 'http://localhost:3000');
     } catch (error) {
