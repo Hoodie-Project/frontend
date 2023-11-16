@@ -23,7 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const serverRes = await postTokenToServer(tokenResponse, '/kakao/signin');
       console.log('서버 응답 : ', serverRes);
 
-      res.redirect(302, 'http://localhost:3000');
+      // 환경에 따라 리다이렉트 URL 설정
+      const redirectURL = process.env.NODE_ENV === 'production' ? 'https://hoodiev.com:3000' : 'http://localhost:3000';
+      res.redirect(302, redirectURL);
     } catch (error) {
       res.status(500).json({ error: '서버 오류가 발생했습니다.' });
     }
