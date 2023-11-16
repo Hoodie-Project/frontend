@@ -7,7 +7,7 @@ interface DaysProps {
 
 function Days({ type }: DaysProps) {
   const DAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const DAYMINI = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Sat'];
+  const DAYMINI = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   const daysToDisplay = type === 'mini' ? DAYMINI : DAY;
 

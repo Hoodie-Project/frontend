@@ -1,14 +1,14 @@
 import React, { ReactNode, useRef } from 'react';
-import { useModalStore } from '@/src/zustand/modal';
 import styled, { keyframes } from 'styled-components';
 
 interface ModalProps {
   children: ReactNode;
+  isModalOpen: boolean;
+  closeModal: () => void;
 }
 
-function Modal({ children }: ModalProps) {
+function Modal({ children, isModalOpen, closeModal }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const { isModalOpen, closeModal } = useModalStore();
 
   const onClickBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) closeModal();

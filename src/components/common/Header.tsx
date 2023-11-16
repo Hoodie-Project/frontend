@@ -11,7 +11,7 @@ function Header() {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const open = Boolean(anchorEl);
   const { toggleSidebarLocation } = useSidebarLocationStore();
-  const { openModal } = useModalStore();
+  const { openSidebarSettingModal } = useModalStore();
 
   const ProfileIcon = getIcons('EmptyProfile');
   const SettingIcon = getIcons('Setting');
@@ -29,7 +29,7 @@ function Header() {
       id: 'add-delete-widget',
       name: '사이드바 위젯 추가/삭제',
       handleClick: () => {
-        openModal();
+        openSidebarSettingModal();
         handleClose();
       },
     },

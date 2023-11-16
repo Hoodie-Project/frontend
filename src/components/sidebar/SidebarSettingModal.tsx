@@ -10,7 +10,7 @@ import { useModalStore } from '@/src/zustand/modal';
 function SidebarSettingModal() {
   const { widgets, setWidgets } = useSidebarStore();
   const [checkedWidgets, setCheckedWidgets] = useState<string[]>([]);
-  const { closeModal } = useModalStore();
+  const { closeSidebarSettingModal, isSidebarSettingModalOpen } = useModalStore();
 
   useEffect(() => {
     setCheckedWidgets(widgets.filter(widget => widget.isVisible).map(widget => widget.id));
@@ -32,11 +32,11 @@ function SidebarSettingModal() {
       isVisible: checkedWidgets.includes(widget.id),
     }));
     setWidgets(updatedWidgets);
-    closeModal();
+    closeSidebarSettingModal();
   };
 
   return (
-    <Modal>
+    <Modal closeModal={closeSidebarSettingModal} isModalOpen={isSidebarSettingModalOpen}>
       <ModalHeader>위젯 추가/삭제</ModalHeader>
       <CheckBoxLayout>
         <FormGroup>
@@ -61,7 +61,7 @@ function SidebarSettingModal() {
         </FormGroup>
       </CheckBoxLayout>
       <ButtonGroup>
-        <Button $type='close' onClick={closeModal}>
+        <Button $type='close' onClick={closeSidebarSettingModal}>
           close
         </Button>
         <Button $type='save' onClick={handleSave}>
