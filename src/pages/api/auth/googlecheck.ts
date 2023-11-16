@@ -33,11 +33,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const tokenResponse = await exchangeCodeForToken(code);
       console.log(tokenResponse);
 
-      // 서버에 토큰 잘 보내지는지 확인
       const serverRes = await postTokenToServer(tokenResponse, '/google/signin');
       console.log('서버 응답 : ', serverRes);
 
-      res.redirect(302, 'http://localhost:3000');
+      // 환경에 따라 리다이렉트 URL 설정
+      const redirectURL = process.env.NODE_ENV === 'production' ? 'https://hoodiev.com:3000' : 'http://localhost:3000';
+      res.redirect(302, redirectURL);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: '서버 오류가 발생했습니다.' });
