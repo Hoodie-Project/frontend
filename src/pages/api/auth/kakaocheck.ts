@@ -12,8 +12,6 @@ async function getTokenFromKakao(authCode: string) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).json({ message: 'Server is running' });
-
   const { code } = req.query;
 
   if (code && typeof code === 'string') {
