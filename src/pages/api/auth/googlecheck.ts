@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log('서버 응답 : ', serverRes);
 
       // 환경에 따라 리다이렉트 URL 설정
-      const redirectURL = process.env.NODE_ENV === 'production' ? 'https://hoodiev.com:3000' : 'http://localhost:3000';
+      const redirectURL = process.env.NODE_ENV === 'production' ? 'https://hoodiev.com' : 'http://localhost:3000';
       res.redirect(302, redirectURL);
     } catch (error) {
       console.error(error);
