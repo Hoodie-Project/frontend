@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-
+import { useModalStore } from '@/src/zustand/modal';
 interface DatesProps {
   lastDate: number;
   firstDate: number;
@@ -14,14 +14,15 @@ interface DatesProps {
 }
 
 function MonthlyDates({ lastDate, firstDate, date, findToday, month, year, idx, type, totalDateLength }: DatesProps) {
+  const { openCreateEventModal } = useModalStore();
+
+  const handleOpenCreateEventModal = () => {
+    if (type === 'mini') return;
+    openCreateEventModal();
+  };
+
   return (
-    <Layout
-      $type={type}
-      $totalDateLength={totalDateLength}
-      onDoubleClick={() => {
-        alert('더블 클릭시 이벤트 생성');
-      }}
-    >
+    <Layout $type={type} $totalDateLength={totalDateLength} onDoubleClick={handleOpenCreateEventModal}>
       <DateNum $type={type} $idx={idx} $lastDate={lastDate} $firstDate={firstDate}>
         <TodayCSS $findToday={findToday} $type={type}>
           {date}

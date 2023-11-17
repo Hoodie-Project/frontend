@@ -9,6 +9,11 @@ import ArrowLeft from './arrow-left.svg';
 import ArrowRight from './arrow-right.svg';
 import Hamburger from './hamburger.svg';
 import Plus from './plus.svg';
+import Calendar31 from './calendar_31.svg';
+import Clock from './clock.svg';
+import DoubleQuote from './double_quote.svg';
+import Refresh from './refresh.svg';
+import X from './X.svg';
 
 const iconMap: { [key: string]: TSvgComponent } = {
   CalendarToday,
@@ -21,6 +26,11 @@ const iconMap: { [key: string]: TSvgComponent } = {
   ArrowRight,
   Hamburger,
   Plus,
+  Calendar31,
+  Clock,
+  DoubleQuote,
+  Refresh,
+  X,
 };
 
 export function getIcons(name: string): TSvgComponent {

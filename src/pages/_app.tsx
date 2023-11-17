@@ -14,6 +14,11 @@ const theme = createTheme({
   typography: {
     fontFamily: 'YeongdeokSea',
   },
+  palette: {
+    secondary: {
+      main: '#6F40FF',
+    },
+  },
 });
 
 function App({ Component, pageProps }: AppProps) {
