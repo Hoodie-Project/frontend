@@ -36,9 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const serverRes = await postTokenToServer(tokenResponse, '/google/signin');
       console.log('서버 응답 : ', serverRes);
 
-      // 환경에 따라 리다이렉트 URL 설정
-      const redirectURL = process.env.NODE_ENV === 'production' ? 'https://hoodiev.com' : 'http://localhost:3000';
-      res.redirect(302, redirectURL);
+      res.redirect(302, `${process.env.NEXT_PUBLIC_HOME_URL}`);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: '서버 오류가 발생했습니다.' });
