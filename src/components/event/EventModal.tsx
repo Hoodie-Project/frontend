@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { useModalStore } from '@/src/zustand/modal';
+
+import Modal from '@/src/components/common/Modal';
+import DateSelector from '@/src/components/common/DateSelector';
+import TimeSelector from '@/src/components/common/TimeSelector';
+
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Modal from '@/src/components/common/Modal';
+import { Input } from '@mui/material';
+
 import { getIcons } from '@/src/assets/icons/getIcons';
+import { useModalStore } from '@/src/zustand/modal';
+import { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
 function EventModal() {
   const [allDayChecked, setAllDayChecked] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(null);
+  const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(null);
   const { closeCreateEventModal, isCreateEventModalOpen } = useModalStore();
   const X = getIcons('X');
 
@@ -16,42 +26,60 @@ function EventModal() {
     closeCreateEventModal();
   };
 
-  const handleAllDayCheckedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAllDayChecked(event.target.checked);
-  };
-
   return (
     <Modal type='createEvent' isModalOpen={isCreateEventModalOpen} closeModal={closeCreateEventModal}>
       <CloseBtn onClick={handleCloseBtn}>
         <X />
       </CloseBtn>
-
       <ModalHeader>Create Event</ModalHeader>
       <ModalBody>
-        <Input type='text' placeholder='이벤트 명'></Input>
-        <DatePickerBox>
-          <Input type='date'></Input>
+        <Input type='text' placeholder='이벤트 명' />
+        <SelectDateBox>
+          <DatePickerBox>
+            <DateSelector
+              value={selectedDate}
+              changeHandler={(newValue: Dayjs | null) => {
+                setSelectedDate(newValue);
+              }}
+            />
+          </DatePickerBox>
           <FormControlLabel
             value='allday'
-            style={{ paddingBottom: '1rem' }}
             control={
-              <Switch checked={allDayChecked} onChange={handleAllDayCheckedChange} defaultChecked color='secondary' />
+              <Switch
+                checked={allDayChecked}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setAllDayChecked(event.target.checked);
+                }}
+                defaultChecked
+                color='secondary'
+              />
             }
             label='하루 종일'
             labelPlacement='end'
           />
-        </DatePickerBox>
-        {allDayChecked && (
-          <TimePickerBox>
+        </SelectDateBox>
+        {!allDayChecked && (
+          <SelectTimeBox>
             <TimePickerLabel>시작</TimePickerLabel>
-            <Input type='time'></Input>
-            <TimePickerLabel>종료</TimePickerLabel>
-            <Input type='time'></Input>
-          </TimePickerBox>
+            <TimeSelector
+              value={selectedStartTime}
+              changeHandler={(newValue: Dayjs | null) => {
+                setSelectedStartTime(newValue);
+              }}
+            />
+            <TimePickerLabel type='end'>종료</TimePickerLabel>
+            <TimeSelector
+              value={selectedEndTime}
+              changeHandler={(newValue: Dayjs | null) => {
+                setSelectedEndTime(newValue);
+              }}
+            />
+          </SelectTimeBox>
         )}
-        <TimePickerLabel>메모</TimePickerLabel>
-        <Input type='text'></Input>
+        <Input type='text' placeholder='메모' />
       </ModalBody>
+      <ModalFooter></ModalFooter>
     </Modal>
   );
 }
@@ -65,25 +93,28 @@ const CloseBtn = styled.div`
   cursor: pointer;
 `;
 
-const Input = styled.input`
-  height: 2rem;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  font-size: 18px;
-  margin-bottom: 1rem;
-  margin-right: 1rem;
+const SelectDateBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 0rem;
 `;
 
-const ModalBody = styled.div`
+const SelectTimeBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+  align-items: center;
+`;
+
+const ModalBody = styled.section`
   width: 40rem;
   height: auto;
   padding: 1em;
   display: flex;
   flex-direction: column;
-  font-size: 18px;
 `;
 
-const ModalHeader = styled.div`
+const ModalHeader = styled.section`
   height: 3rem;
   width: 100%;
   border-radius: 0.7rem 0.7rem 0 0;
@@ -96,17 +127,23 @@ const ModalHeader = styled.div`
   justify-content: center;
 `;
 
+const ModalFooter = styled.section`
+  width: 40rem;
+  height: auto;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+`;
+
 const DatePickerBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-right: 2rem;
 `;
 
-const TimePickerBox = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const TimePickerLabel = styled.span`
-  margin-right: 1rem;
+const TimePickerLabel = styled.span<{ type?: string }>`
+  width: 2rem;
+  margin-right: 0.5rem;
+  margin-left: ${props => (props.type === 'end' ? '1rem' : '')};
 `;
