@@ -20,6 +20,10 @@ function EventModal() {
   const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(null);
   const { closeCreateEventModal, isCreateEventModalOpen } = useModalStore();
   const X = getIcons('X');
+  const Clock = getIcons('Clock');
+  const DoubleQuote = getIcons('DoubleQuote');
+  const Refresh = getIcons('Refresh');
+  const Memo = getIcons('Memo');
 
   const handleCloseBtn = () => {
     alert('이벤트 저장을 하지 않고 나가시겠습니까?');
@@ -33,8 +37,12 @@ function EventModal() {
       </CloseBtn>
       <ModalHeader>Create Event</ModalHeader>
       <ModalBody>
-        <Input type='text' placeholder='이벤트 명' />
+        <InputBox>
+          <DoubleQuote />
+          <Input type='text' placeholder='이벤트 명' fullWidth />
+        </InputBox>
         <SelectDateBox>
+          <Clock />
           <DatePickerBox>
             <DateSelector
               value={selectedDate}
@@ -77,9 +85,17 @@ function EventModal() {
             />
           </SelectTimeBox>
         )}
-        <Input type='text' placeholder='메모' />
+        <InputBox>
+          <Memo />
+          <Input type='text' placeholder='메모' fullWidth />
+        </InputBox>
       </ModalBody>
-      <ModalFooter></ModalFooter>
+      <ModalFooter>
+        <ModalFooterBtn type='close' onClick={handleCloseBtn}>
+          취소
+        </ModalFooterBtn>
+        <ModalFooterBtn type='submit'>저장</ModalFooterBtn>
+      </ModalFooter>
     </Modal>
   );
 }
@@ -96,7 +112,11 @@ const CloseBtn = styled.div`
 const SelectDateBox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin: 1rem 0rem;
+  svg {
+    margin-right: 1rem;
+  }
 `;
 
 const SelectTimeBox = styled.div`
@@ -107,7 +127,7 @@ const SelectTimeBox = styled.div`
 `;
 
 const ModalBody = styled.section`
-  width: 40rem;
+  width: 35rem;
   height: auto;
   padding: 1em;
   display: flex;
@@ -128,11 +148,12 @@ const ModalHeader = styled.section`
 `;
 
 const ModalFooter = styled.section`
-  width: 40rem;
+  width: 35rem;
   height: auto;
-  padding: 1em;
+  padding: 0rem 1rem 1rem 1rem;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
 `;
 
 const DatePickerBox = styled.div`
@@ -146,4 +167,23 @@ const TimePickerLabel = styled.span<{ type?: string }>`
   width: 2rem;
   margin-right: 0.5rem;
   margin-left: ${props => (props.type === 'end' ? '1rem' : '')};
+`;
+
+const InputBox = styled.section`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  svg {
+    margin-right: 1rem;
+  }
+`;
+
+const ModalFooterBtn = styled.button<{ type: string }>`
+  width: 4.375rem;
+  height: 2.5rem;
+  margin-left: 1rem;
+  background-color: ${props => (props.type === 'submit' ? '#6f40ff' : '')};
+  font-weight: bold;
+  color: ${props => (props.type === 'submit' ? 'white' : '#6f40ff')};
+  border-radius: 0.7rem;
 `;
