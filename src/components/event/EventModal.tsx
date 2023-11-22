@@ -60,7 +60,7 @@ function EventModal() {
                   setAllDayChecked(event.target.checked);
                 }}
                 defaultChecked
-                color='secondary'
+                color='primary'
               />
             }
             label='하루 종일'

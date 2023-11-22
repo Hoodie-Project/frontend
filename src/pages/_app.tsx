@@ -15,7 +15,7 @@ const theme = createTheme({
     fontFamily: 'YeongdeokSea',
   },
   palette: {
-    secondary: {
+    primary: {
       main: '#6F40FF',
     },
   },
