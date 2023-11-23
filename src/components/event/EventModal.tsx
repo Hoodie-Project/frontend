@@ -3,22 +3,28 @@ import React, { useState } from 'react';
 import Modal from '@/src/components/common/Modal';
 import DateSelector from '@/src/components/common/DateSelector';
 import TimeSelector from '@/src/components/common/TimeSelector';
+import ToggleSwitch from '@/src/components/common/ToggleSwitch';
+import RepeatSettings from '@/src/components/event/RepeatSettings';
+import Selector from '../common/Selector';
 
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { Input } from '@mui/material';
+import { Input, SelectChangeEvent } from '@mui/material';
 
 import { getIcons } from '@/src/assets/icons/getIcons';
 import { useModalStore } from '@/src/zustand/modal';
 import { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
+import { calendarList } from './calendarList';
+
 function EventModal() {
-  const [allDayChecked, setAllDayChecked] = useState(false);
+  const [selectedCalendar, setSelectedCalendar] = useState('');
+  const [allDayChecked, setAllDayChecked] = useState(true);
+  const [repeatChecked, setRepeatChecked] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(null);
   const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(null);
   const { closeCreateEventModal, isCreateEventModalOpen } = useModalStore();
+
   const X = getIcons('X');
   const Clock = getIcons('Clock');
   const DoubleQuote = getIcons('DoubleQuote');
@@ -30,6 +36,11 @@ function EventModal() {
     closeCreateEventModal();
   };
 
+  function getSelectedCalendarColor(selectedValue: string): string {
+    const selectedCalendar = calendarList.find(calendar => calendar.value === selectedValue);
+    return selectedCalendar ? selectedCalendar.color : 'defaultColor'; // 선택되지 않은 경우 기본 색상
+  }
+
   return (
     <Modal type='createEvent' isModalOpen={isCreateEventModalOpen} closeModal={closeCreateEventModal}>
       <CloseBtn onClick={handleCloseBtn}>
@@ -37,6 +48,17 @@ function EventModal() {
       </CloseBtn>
       <ModalHeader>Create Event</ModalHeader>
       <ModalBody>
+        <InputBox>
+          <CalendarColor $selectedCalendar={selectedCalendar} $color={getSelectedCalendarColor(selectedCalendar)} />
+          <Selector
+            value={selectedCalendar}
+            handleChange={(event: SelectChangeEvent) => {
+              setSelectedCalendar(event.target.value);
+            }}
+            label='캘린더'
+            menuItemList={calendarList}
+          />
+        </InputBox>
         <InputBox>
           <DoubleQuote />
           <Input type='text' placeholder='이벤트 명' fullWidth />
@@ -51,18 +73,11 @@ function EventModal() {
               }}
             />
           </DatePickerBox>
-          <FormControlLabel
-            value='allday'
-            control={
-              <Switch
-                checked={allDayChecked}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setAllDayChecked(event.target.checked);
-                }}
-                defaultChecked
-                color='primary'
-              />
-            }
+          <ToggleSwitch
+            checked={allDayChecked}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setAllDayChecked(event.target.checked);
+            }}
             label='하루 종일'
             labelPlacement='end'
           />
@@ -84,6 +99,22 @@ function EventModal() {
               }}
             />
           </SelectTimeBox>
+        )}
+        <InputBox>
+          <Refresh />
+          <ToggleSwitch
+            checked={repeatChecked}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setRepeatChecked(event.target.checked);
+            }}
+            label='반복 안 함'
+            labelPlacement='end'
+          />
+        </InputBox>
+        {!repeatChecked && (
+          <RepeatSettingBox>
+            <RepeatSettings />
+          </RepeatSettingBox>
         )}
         <InputBox>
           <Memo />
@@ -109,11 +140,20 @@ const CloseBtn = styled.div`
   cursor: pointer;
 `;
 
+const CalendarColor = styled.div<{ $selectedCalendar?: string; $color?: string }>`
+  width: 24px;
+  height: 24px;
+  background-color: ${props => (props.$selectedCalendar === '' ? 'white' : `${props.$color}`)};
+  border: 2px solid ${props => (props.$selectedCalendar === '' ? '#6f40ff' : `${props.$color}`)};
+  border-radius: 50%;
+  margin-right: 1rem;
+`;
+
 const SelectDateBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 1rem 0rem;
+  margin-bottom: 1rem;
   svg {
     margin-right: 1rem;
   }
@@ -123,6 +163,7 @@ const SelectTimeBox = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
+  margin-left: 2.5rem;
   align-items: center;
 `;
 
@@ -173,6 +214,7 @@ const InputBox = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 1rem;
   svg {
     margin-right: 1rem;
   }
@@ -186,4 +228,9 @@ const ModalFooterBtn = styled.button<{ type: string }>`
   font-weight: bold;
   color: ${props => (props.type === 'submit' ? 'white' : '#6f40ff')};
   border-radius: 0.7rem;
+`;
+
+const RepeatSettingBox = styled.section`
+  margin-bottom: 1rem;
+  margin-left: 2.5rem;
 `;

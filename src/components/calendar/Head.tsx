@@ -113,7 +113,7 @@ const TodayDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
+  border-radius: 50px;
   margin-right: 1.9375rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -121,10 +121,9 @@ const TodayDiv = styled.div`
     margin-right: 1rem;
   }
   &:hover {
-    border-radius: 50px;
     background: #e5e0ed;
-    transition: background-color 0.3s;
   }
+  transition: background-color 0.3s;
 `;
 
 const BtnBox = styled.div`
@@ -147,8 +146,8 @@ const MiniSvgContainer = styled.div`
   }
   &:hover {
     background-color: #e5e0ed;
-    transition: background-color 0.3s;
   }
+  transition: background-color 0.3s;
 `;
 
 const SvgContainer = styled.div`
@@ -161,8 +160,8 @@ const SvgContainer = styled.div`
   cursor: pointer;
   &:hover {
     background-color: #e5e0ed;
-    transition: background-color 0.3s;
   }
+  transition: background-color 0.3s;
 `;
 
 const YearMonth = styled.div`
@@ -190,7 +189,7 @@ const SwitchCalendarViewBtn = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
+  border-radius: 50px;
   margin-right: 1.9375rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -203,10 +202,9 @@ const SwitchCalendarViewBtn = styled.div`
     transform: rotate(90deg);
   }
   &:hover {
-    border-radius: 50px;
     background: #e5e0ed;
-    transition: background-color 0.3s;
   }
+  transition: background-color 0.3s;
 `;
 
 const AddEventButton = styled.div`
