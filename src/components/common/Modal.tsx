@@ -12,7 +12,7 @@ function Modal({ type, children, isModalOpen, closeModal }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const onClickBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (type === 'createEvent') return;
+    if (type === 'createEvent' || 'repeatSetting') return;
     if (e.target === e.currentTarget) closeModal();
   };
 

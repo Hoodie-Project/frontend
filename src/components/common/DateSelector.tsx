@@ -13,6 +13,7 @@ function DateSelector({ value, changeHandler }: DateSelectorProps) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
+        sx={{ minWidth: 205.5 }}
         slotProps={{ textField: { size: 'small', variant: 'standard' } }}
         value={value}
         onChange={changeHandler}

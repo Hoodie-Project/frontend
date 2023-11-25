@@ -4,8 +4,8 @@ import Modal from '@/src/components/common/Modal';
 import DateSelector from '@/src/components/common/DateSelector';
 import TimeSelector from '@/src/components/common/TimeSelector';
 import ToggleSwitch from '@/src/components/common/ToggleSwitch';
-import RepeatSettings from '@/src/components/event/RepeatSettings';
-import Selector from '../common/Selector';
+import ModalButton from '@/src/components/common/ModalButton';
+import Selector from '@/src/components/common/Selector';
 
 import { Input, SelectChangeEvent } from '@mui/material';
 
@@ -14,7 +14,7 @@ import { useModalStore } from '@/src/zustand/modal';
 import { Dayjs } from 'dayjs';
 import styled from 'styled-components';
 
-import { calendarList } from './calendarList';
+import { calendarList } from '@/src/assets/data/calendarList';
 
 function EventModal() {
   const [selectedCalendar, setSelectedCalendar] = useState('');
@@ -23,7 +23,7 @@ function EventModal() {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(null);
   const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(null);
-  const { closeCreateEventModal, isCreateEventModalOpen } = useModalStore();
+  const { closeCreateEventModal, isCreateEventModalOpen, openRepeatSettingModal } = useModalStore();
 
   const X = getIcons('X');
   const Clock = getIcons('Clock');
@@ -110,22 +110,16 @@ function EventModal() {
             label='반복 안 함'
             labelPlacement='end'
           />
+          {!repeatChecked && <RepeatSettingButton onClick={openRepeatSettingModal}>반복 설정</RepeatSettingButton>}
         </InputBox>
-        {!repeatChecked && (
-          <RepeatSettingBox>
-            <RepeatSettings />
-          </RepeatSettingBox>
-        )}
         <InputBox>
           <Memo />
           <Input type='text' placeholder='메모' fullWidth />
         </InputBox>
       </ModalBody>
       <ModalFooter>
-        <ModalFooterBtn type='close' onClick={handleCloseBtn}>
-          취소
-        </ModalFooterBtn>
-        <ModalFooterBtn type='submit'>저장</ModalFooterBtn>
+        <ModalButton type='close' name='취소' handleClick={handleCloseBtn} />
+        <ModalButton type='submit' name='저장' />
       </ModalFooter>
     </Modal>
   );
@@ -220,17 +214,17 @@ const InputBox = styled.section`
   }
 `;
 
-const ModalFooterBtn = styled.button<{ type: string }>`
-  width: 4.375rem;
-  height: 2.5rem;
+const RepeatSettingButton = styled.button`
+  width: 5rem;
+  height: 2rem;
   margin-left: 1rem;
-  background-color: ${props => (props.type === 'submit' ? '#6f40ff' : '')};
+  background-color: white;
+  border: 1px solid #6f40ff;
   font-weight: bold;
-  color: ${props => (props.type === 'submit' ? 'white' : '#6f40ff')};
-  border-radius: 0.7rem;
-`;
-
-const RepeatSettingBox = styled.section`
-  margin-bottom: 1rem;
-  margin-left: 2.5rem;
+  color: #6f40ff;
+  border-radius: 50px;
+  &:hover {
+    background-color: #faeaff;
+  }
+  transition: background-color 0.3s;
 `;
