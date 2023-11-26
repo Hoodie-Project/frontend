@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import Checkbox from '@mui/material/Checkbox';
 import CheckboxList from '@/src/components/common/CheckboxList';
-import RadioboxGroup from '@/src/components/common/RadioboxGroup';
-
 import Modal from '@/src/components/common/Modal';
 import { useModalStore } from '@/src/zustand/modal';
 import { styled } from 'styled-components';
