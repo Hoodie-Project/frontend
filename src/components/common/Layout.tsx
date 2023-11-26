@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import Header from './Header';
 import SidebarSettingModal from '@/src/components/sidebar/SidebarSettingModal';
+import EventModal from '@/src/components/event/EventModal';
+import RepeatSettingModal from '@/src/components/event/RepeatSettingModal';
 import { styled } from 'styled-components';
 
 interface LayoutProps {
@@ -11,6 +13,8 @@ function Layout({ children }: LayoutProps) {
   return (
     <LayoutWrapper>
       <SidebarSettingModal />
+      <EventModal />
+      <RepeatSettingModal />
       <Header />
       <Main>{children}</Main>
     </LayoutWrapper>

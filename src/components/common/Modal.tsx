@@ -2,15 +2,17 @@ import React, { ReactNode, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 interface ModalProps {
+  type?: string;
   children: ReactNode;
   isModalOpen: boolean;
   closeModal: () => void;
 }
 
-function Modal({ children, isModalOpen, closeModal }: ModalProps) {
+function Modal({ type, children, isModalOpen, closeModal }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const onClickBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (type === 'createEvent' || 'repeatSetting') return;
     if (e.target === e.currentTarget) closeModal();
   };
 
@@ -40,7 +42,7 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(255, 255, 255, 0.6);
   z-index: 9;
   animation: ${fadeIn} 0.2s ease-in-out;
 `;
