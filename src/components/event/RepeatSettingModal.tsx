@@ -87,9 +87,22 @@ function RepeatSettingModal() {
                 handleChange={(event: SelectChangeEvent) => {
                   setSelectedCycle(event.target.value);
                 }}
-                label='반복 설정'
+                label='주기 설정'
                 menuItemList={matchingContentByPeriod?.cycle?.content}
               />
+              <div>
+                {matchingContentByPeriod?.id === 'daily' ? (
+                  <span>일</span>
+                ) : matchingContentByPeriod?.id === 'weekly' ? (
+                  <span>주</span>
+                ) : matchingContentByPeriod?.id === 'monthly' ? (
+                  <span>월</span>
+                ) : matchingContentByPeriod?.id === 'yearly' ? (
+                  <span>월</span>
+                ) : (
+                  ''
+                )}
+              </div>
             </InputBox>
           )}
 

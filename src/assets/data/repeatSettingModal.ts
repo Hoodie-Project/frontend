@@ -141,10 +141,6 @@ export const returnContents = [
       label: '주기',
       content: oneToNumberDropDown(99),
     },
-    endDate: {
-      label: '종료',
-      content: endDropDown,
-    },
   },
   {
     id: 'weekly',
@@ -153,10 +149,6 @@ export const returnContents = [
       content: oneToNumberDropDown(99),
     },
     setting: { label: '설정', content: weeklySettingCheckList },
-    endDate: {
-      label: '종료',
-      content: endDropDown,
-    },
   },
   {
     id: 'monthly',
@@ -165,10 +157,6 @@ export const returnContents = [
       content: oneToNumberDropDown(99),
     },
     setting: { label: '설정', content: settingDropDown },
-    endDate: {
-      label: '종료',
-      content: endDropDown,
-    },
   },
   {
     id: 'yearly',
@@ -177,9 +165,5 @@ export const returnContents = [
       content: oneToNumberDropDown(12),
     },
     setting: { label: '설정', content: settingDropDown },
-    endDate: {
-      label: '종료',
-      content: endDropDown,
-    },
   },
 ];
