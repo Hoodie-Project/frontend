@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Days from './Days';
 import { getIcons } from '@/src/assets/icons/getIcons';
 import { getMonthName } from '@/src/utils/calendar';
+import { useModalStore } from '@/src/zustand/modal';
 
 interface HeadProps {
   year: number;
@@ -17,6 +18,7 @@ function Head({ year, month, goToday, setMonth, type }: HeadProps) {
   const ArrowLeft = getIcons('ArrowLeft');
   const CalendarToday = getIcons('CalendarToday');
   const CalendarMonth = getIcons('CalendarMonth');
+  const { openCreateEventModal } = useModalStore();
 
   return (
     <>
@@ -65,7 +67,7 @@ function Head({ year, month, goToday, setMonth, type }: HeadProps) {
                 <Span>Month</Span>
                 <ArrowRight />
               </SwitchCalendarViewBtn>
-              <AddEventButton>New Event</AddEventButton>
+              <AddEventButton onClick={() => openCreateEventModal()}>New Event</AddEventButton>
             </RightSide>
           </HeadSection>
           <Days />
