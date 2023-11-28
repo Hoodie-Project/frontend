@@ -66,6 +66,7 @@ const Layout = styled.div`
 const SidebarContentContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
   padding-bottom: 1rem;
   height: calc(100% - 10.625rem);
