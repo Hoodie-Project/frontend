@@ -44,9 +44,30 @@ const Layout = styled.div<{ $size: string; $isDraggedOver: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border-radius: 15px;
   margin-top: 0.5rem;
   flex-grow: ${({ $size }) => ($size === 's' ? 1 : $size === 'm' ? 2 : 3)};
+
+  ${({ $size }) => {
+    switch ($size) {
+      case 's':
+        return css`
+          height: 10.1294rem;
+        `;
+      case 'm':
+        return css`
+          height: 14.7581rem;
+        `;
+      case 'l':
+        return css`
+          height: 19.3875rem;
+        `;
+      default:
+        return '';
+    }
+  }}
 
   ${props =>
     props.$isDraggedOver

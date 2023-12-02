@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useModalStore } from '@/src/zustand/modal';
+import { eventExample } from '@/src/assets/data/calendarList';
 interface DatesProps {
   lastDate: number;
   firstDate: number;
@@ -21,6 +22,21 @@ function MonthlyDates({ lastDate, firstDate, date, findToday, month, year, idx, 
     openCreateEventModal();
   };
 
+  // 현재 달력에 표시된 월과 일치하는 날짜인지 확인
+  const isCurrentMonth = idx >= lastDate && (firstDate === 0 || idx < firstDate);
+
+  // 이벤트 필터링 로직
+  const currentDate = new Date(year, month - 1, date);
+  const filteredEvents = eventExample
+    .filter(event => {
+      const startDate = new Date(event.startDate);
+      const endDate = new Date(event.endDate);
+      const isSameMonth =
+        startDate.getMonth() === currentDate.getMonth() && startDate.getFullYear() === currentDate.getFullYear();
+      return isSameMonth && startDate <= currentDate && currentDate <= endDate;
+    })
+    .filter(event => isCurrentMonth); // 현재 달에 해당하는 날짜만 필터링
+
   return (
     <Layout $type={type} $totalDateLength={totalDateLength} onDoubleClick={handleOpenCreateEventModal}>
       <DateNum $type={type} $idx={idx} $lastDate={lastDate} $firstDate={firstDate}>
@@ -28,6 +44,13 @@ function MonthlyDates({ lastDate, firstDate, date, findToday, month, year, idx, 
           {date}
         </TodayCSS>
       </DateNum>
+      {/* 이벤트 표시 */}
+      {type !== 'mini' &&
+        filteredEvents.map(event => (
+          <EventLine key={event.id} $eventColor={event.calendarColor}>
+            {event.memo}
+          </EventLine>
+        ))}
     </Layout>
   );
 }
@@ -78,20 +101,25 @@ const DateNum = styled.div<{ $idx: number; $lastDate: number; $firstDate: number
 `;
 
 const TodayCSS = styled.span<{ $findToday: boolean; $type?: string }>`
+  width: 1.625rem;
+  height: 1.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.1rem;
   ${props =>
     props.$findToday &&
     css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: 1.625rem;
-      height: 1.625rem;
       border-radius: 50%;
       font-weight: 700;
       color: #ffffff;
       background-color: #6f40ff;
     `}
+`;
+
+const EventLine = styled.div<{ $eventColor: string }>`
+  background-color: ${props => props.$eventColor};
+  color: black;
 `;
 
 export default MonthlyDates;

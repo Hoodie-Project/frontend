@@ -1,10 +1,10 @@
 import React from 'react';
 import { styled } from 'styled-components';
-
+import CalendarGroup from '@/src/components/calendar-group/CalendarGroup';
 function EventWidget() {
   return (
     <Layout>
-      이벤트 위젯 내용<button onClick={() => alert('눌린')}>clicktest</button>
+      <CalendarGroup />
     </Layout>
   );
 }
@@ -12,7 +12,21 @@ function EventWidget() {
 export default EventWidget;
 
 const Layout = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 0.5rem;
+  box-sizing: border-box;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  padding: 0.25rem;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #e4ccff;
+    border-radius: 50px;
+  }
+
+  scrollbar-color: #e4ccff;
+  scrollbar-width: thin;
 `;
