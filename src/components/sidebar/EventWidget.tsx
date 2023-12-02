@@ -1,12 +1,10 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import Accordion from '../common/Accordion';
-import { list } from '@/src/assets/data/sidebarCalendar';
-
+import CalendarGroup from '@/src/components/calendar-group/CalendarGroup';
 function EventWidget() {
   return (
     <Layout>
-      <Accordion data={list} />
+      <CalendarGroup />
     </Layout>
   );
 }

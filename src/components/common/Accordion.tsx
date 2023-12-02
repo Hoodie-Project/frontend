@@ -16,7 +16,7 @@ interface AccordionProps {
 
 function Accordion({ data }: AccordionProps) {
   const [isToggleOpen, setIsToggleOpen] = useState<{ [key: string]: boolean }>(
-    data.reduce((acc, item) => ({ ...acc, [item.id]: true }), {}),
+    data.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}),
   );
   const ArrowRight = getIcons('ArrowRight');
 
