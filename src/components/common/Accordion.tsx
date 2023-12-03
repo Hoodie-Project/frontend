@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { getIcons } from '@/src/assets/icons/getIcons';
 import Checkbox from './Checkbox';
@@ -11,10 +11,12 @@ interface AccordionData {
 }
 
 interface AccordionProps {
+  type?: string;
   data: AccordionData[];
+  children?: ReactNode;
 }
 
-function Accordion({ data }: AccordionProps) {
+function Accordion({ type, data, children }: AccordionProps) {
   const [isToggleOpen, setIsToggleOpen] = useState<{ [key: string]: boolean }>(
     data.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}),
   );
@@ -34,12 +36,14 @@ function Accordion({ data }: AccordionProps) {
           <ToggleTitleDiv onClick={() => handleClickToggleTitle(item.id)}>
             <ToggleIconSpan $istoggleopen={isToggleOpen[item.id]}>
               <ArrowRight />
+              <ToggleTitle>{item.title}</ToggleTitle>
             </ToggleIconSpan>
-            <ToggleTitle>{item.title}</ToggleTitle>
+            {type === 'calendarGroup' && <MenuDots />}
           </ToggleTitleDiv>
           {isToggleOpen[item.id] && (
             <ToggleContents>
-              <Checkbox data={item.list} />
+              <Checkbox type='calendarGroup' data={item.list} />
+              <div>{children}</div>
             </ToggleContents>
           )}
         </Layout>
@@ -49,6 +53,11 @@ function Accordion({ data }: AccordionProps) {
 }
 
 export default Accordion;
+
+const MenuDots = styled(getIcons('MenuDots'))`
+  visibility: hidden;
+  cursor: pointer;
+`;
 
 const rotateOpen = keyframes`
   from {
@@ -75,16 +84,21 @@ const Layout = styled.div`
 
 const ToggleTitleDiv = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &:hover ${MenuDots} {
+    visibility: visible;
+  }
 `;
 
 const ToggleIconSpan = styled.span<{ $istoggleopen: boolean }>`
   svg {
     width: 0.875rem;
     height: 0.875rem;
+    margin-right: 0.5rem;
+    animation: ${props => (props.$istoggleopen ? rotateOpen : rotateClose)} 0.1s linear forwards;
   }
   display: inline-block;
-  margin-right: 0.5rem;
-  animation: ${props => (props.$istoggleopen ? rotateOpen : rotateClose)} 0.1s linear forwards;
 `;
 
 const ToggleTitle = styled.span`

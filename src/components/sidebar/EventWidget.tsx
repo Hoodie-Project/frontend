@@ -1,17 +1,21 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import CalendarGroup from '@/src/components/calendar-group/CalendarGroup';
+import AddCalendarGroupBtn from '@/src/components/calendar-group/AddCalendarGroupBtn';
 function EventWidget() {
   return (
-    <Layout>
-      <CalendarGroup />
-    </Layout>
+    <>
+      <CalendarGroupDiv>
+        <CalendarGroup />
+      </CalendarGroupDiv>
+      <AddCalendarGroupBtn />
+    </>
   );
 }
 
 export default EventWidget;
 
-const Layout = styled.div`
+const CalendarGroupDiv = styled.div`
   box-sizing: border-box;
   width: calc(100% - 8px);
   height: calc(100% - 8px);

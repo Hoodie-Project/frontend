@@ -1,3 +1,4 @@
+import { getIcons } from '@/src/assets/icons/getIcons';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -8,16 +9,22 @@ interface Checkbox {
 }
 
 interface CheckboxProps {
+  type?: string;
   data: Checkbox[];
 }
 
-function Checkbox({ data }: CheckboxProps) {
+function Checkbox({ type, data }: CheckboxProps) {
+  // const MenuDots = getIcons('MenuDots');
+
   return (
     <Layout>
       {data?.map(item => (
         <InputLabel key={item.id} htmlFor={item.id}>
-          <RoundInput type='checkbox' $color={item.color} id={item.id} name={item.title} />
-          <StyledP>{item.title}</StyledP>
+          <FlexColumn>
+            <RoundInput type='checkbox' $color={item.color} id={item.id} name={item.title} />
+            <StyledP>{item.title}</StyledP>
+          </FlexColumn>
+          {type === 'calendarGroup' && <MenuDots />}
         </InputLabel>
       ))}
     </Layout>
@@ -26,11 +33,22 @@ function Checkbox({ data }: CheckboxProps) {
 
 export default Checkbox;
 
+const MenuDots = styled(getIcons('MenuDots'))`
+  visibility: hidden;
+  cursor: pointer;
+`;
+
 const Layout = styled.div`
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
+`;
+
+const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const RoundInput = styled.input<{ $color?: string }>`
@@ -54,7 +72,11 @@ const RoundInput = styled.input<{ $color?: string }>`
 const InputLabel = styled.label`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   user-select: none;
+  &:hover ${MenuDots} {
+    visibility: visible;
+  }
 `;
 
 const StyledP = styled.p`

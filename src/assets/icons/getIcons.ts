@@ -15,6 +15,7 @@ import DoubleQuote from './double_quote.svg';
 import Refresh from './refresh.svg';
 import X from './X.svg';
 import Memo from './iconmonstr-note-14.svg';
+import MenuDots from './iconmonstr-menu-dot-horizontal-thin.svg';
 
 const iconMap: { [key: string]: TSvgComponent } = {
   CalendarToday,
@@ -32,7 +33,8 @@ const iconMap: { [key: string]: TSvgComponent } = {
   DoubleQuote,
   Refresh,
   X,
-  Memo
+  Memo,
+  MenuDots,
 };
 
 export function getIcons(name: string): TSvgComponent {
